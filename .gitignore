@@ -1,0 +1,20 @@
+# folders
+build
+install
+log
+__pycache__
+temp
+
+# temporary stuff
+.pybuild
+*egg-info
+*~
+export_parameters.m
+
+# QT Creator stuff
+*.workspace.user
+
+
+# files starting wtih underline in this dir
+/_*.sh
+/_*.py
