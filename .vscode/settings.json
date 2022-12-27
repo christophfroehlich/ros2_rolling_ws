@@ -82,7 +82,12 @@
     "hash_map": "cpp",
     "hash_set": "cpp",
     "*.ipp": "cpp",
-    "*.idl": "cpp"
+    "*.idl": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "numbers": "cpp",
+    "semaphore": "cpp",
+    "stop_token": "cpp"
   },
   "python.analysis.extraPaths": [
     "/opt/ros/rolling/lib/python3.10/site-packages/"
