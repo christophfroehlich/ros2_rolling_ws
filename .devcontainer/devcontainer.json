@@ -21,9 +21,7 @@
     "dotjoshjohnson.xml",
     "zachflower.uncrustify",
     "ms-azuretools.vscode-docker",
-    "ms-python.python",
     "ms-iot.vscode-ros",
-    "ms-python.python",
     "ms-vscode.cpptools",
     "ms-vscode.cmake-tools",
     "redhat.vscode-yaml",
@@ -32,7 +30,10 @@
     "streetsidesoftware.code-spell-checker",
     "yzhang.markdown-all-in-one",
     "eamodio.gitlens",
-    "mhutchie.git-graph"
+    "mhutchie.git-graph",
+    "lextudio.restructuredtext",
+    "trond-snekvik.simple-rst",
+    "ms-python.python",
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
@@ -77,7 +78,7 @@
   // has to be commented out on a LINUX host or we set the display variable acording to the host system
   //"updateContentCommand": "./.devcontainer/updateContentCommand.sh",
   // this installs the development dependencies
-  //"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+  "postCreateCommand": "./.devcontainer/postCreateCommand.sh",
   // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode"
 }

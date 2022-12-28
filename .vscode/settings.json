@@ -1,6 +1,6 @@
 {
   "editor.tabSize": 2,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.detectIndentation": false,
   "editor.rulers": [
     100
@@ -87,7 +87,9 @@
     "concepts": "cpp",
     "numbers": "cpp",
     "semaphore": "cpp",
-    "stop_token": "cpp"
+    "stop_token": "cpp",
+    "coroutine": "cpp",
+    "source_location": "cpp"
   },
   "python.analysis.extraPaths": [
     "/opt/ros/rolling/lib/python3.10/site-packages/"
@@ -102,7 +104,7 @@
     "--max-line-length=100"
   ],
   "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
-  "C_Cpp.formatting": "Disabled",
+  "C_Cpp.formatting": "default",
   // if compiled from source, it isn't installed under /upt/ros/rolling
   "uncrustify.configPath.linux": "/opt/ros/rolling/lib/python3.10/site-packages/ament_uncrustify/configuration/ament_code_style.cfg",
   "[cpp]": {
@@ -162,5 +164,6 @@
   "cmake.configureOnOpen": false,
   "ros.distro": "rolling",
   "ros.rosSetupScript": "/opt/ros/rolling/install/setup.bash",
-  "ros.isolateEnvironment": false
+  "ros.isolateEnvironment": false,
+  "esbonio.sphinx.confDir": ""
 }

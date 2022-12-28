@@ -3,8 +3,9 @@
     {
       "name": "Linux",
       "includePath": [
-        "/opt/ros/rolling/include",
-        "${workspaceFolder}/**"
+        "/opt/ros/rolling/include/**",
+        "${workspaceFolder}/**",
+        "/usr/include/**"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/gcc",
