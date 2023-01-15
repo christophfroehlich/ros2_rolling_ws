@@ -19,3 +19,12 @@
 [submodule "src/ros2_controllers"]
     path = src/ros2_controllers
     url = https://github.com/ros-controls/ros2_controllers.git
+[submodule "src/control_toolbox"]
+    path = src/control_toolbox
+    url = https://github.com/ros-controls/control_toolbox.git
+[submodule "src/gazebo_ros_pkgs"]
+    path = src/gazebo_ros_pkgs
+    url = https://github.com/ros-controls/gazebo_ros_pkgs.git
+[submodule "src/realtime_tools"]
+    path = src/realtime_tools
+    url = https://github.com/ros-controls/realtime_tools.git
