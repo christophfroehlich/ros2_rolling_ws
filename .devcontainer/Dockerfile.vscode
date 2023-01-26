@@ -23,7 +23,7 @@ RUN \
   ros-rolling-camera-info-manager \
   ros-rolling-diagnostic-updater \
   ros-rolling-filters \
-  ros-rolling-gazebo-dev \
+  # ros-rolling-gazebo-dev \
   ros-rolling-generate-parameter-library \
   ros-rolling-generate-parameter-library-py \
   ros-rolling-joint-state-publisher-gui \
