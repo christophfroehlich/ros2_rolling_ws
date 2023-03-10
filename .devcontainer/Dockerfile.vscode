@@ -10,7 +10,7 @@ RUN \
   apt-get update -y -qq && \
   : "install ROS dependencies" && \
   apt-get -y install --no-install-recommends \
-  clang-format-12 \
+  clang-format \
   python3-pygraphviz \
   python3-rospkg \
   libdw-dev \ 
