@@ -28,3 +28,6 @@
 [submodule "src/realtime_tools"]
     path = src/realtime_tools
     url = https://github.com/ros-controls/realtime_tools.git
+[submodule "src/control.ros.org"]
+    path = src/realtime_tools
+    url = https://github.com/ros-controls/control.ros.org.git
