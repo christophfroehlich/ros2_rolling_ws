@@ -16,6 +16,7 @@ RUN \
   libdw-dev \ 
   libelf-dev \ 
   python3-pip \
+  npm \
   ros-rolling-ackermann-msgs \
   ros-rolling-ament-cmake-google-benchmark \
   ros-rolling-angles \
@@ -41,6 +42,15 @@ RUN \
   apt-get autoremove -y -qq && \
   apt-get clean -y && \
   rm -rf /var/lib/apt/lists/*
+
+# github CLI
+RUN \
+  type -p curl >/dev/null || sudo apt install curl -y && \
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+  && sudo apt update \
+  && sudo apt install gh -y
 
 # This Dockerfile adds a non-root user with sudo access. Use the "remoteUser"
 # property in devcontainer.json to use it. On Linux, the container user's GID/UIDs
@@ -75,6 +85,9 @@ RUN apt-get update \
 
 # install esbonio for sphinx 
 RUN pip install esbonio && pip3 install pre-commit
+
+# install git extension 
+RUN npm install -g git-removed-branches
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
