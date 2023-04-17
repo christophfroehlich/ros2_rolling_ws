@@ -312,7 +312,14 @@
       "type": "shell",
       "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
       "problemMatcher": []
-    }
+    },
+    {
+      "label": "fix broken vscode server socket",
+      "detail": "see https://github.com/microsoft/vscode-remote-release/issues/6997",
+      "type": "shell",
+      "command": "VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )",
+    "problemMatcher": []
+  },
   ],
   "inputs": [
     {
