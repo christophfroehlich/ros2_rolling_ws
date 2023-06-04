@@ -165,5 +165,12 @@
   "ros.distro": "rolling",
   "ros.rosSetupScript": "/opt/ros/rolling/install/setup.bash",
   "ros.isolateEnvironment": false,
-  "esbonio.sphinx.confDir": ""
+  "git.useCommitInputAsStashMessage": true,
+  "git.repositoryScanIgnoredFolders": [
+    "node_modules",
+    "log",
+    "build",
+    "install"
+  ],
+  "git.repositoryScanMaxDepth": 3
 }
