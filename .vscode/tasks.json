@@ -318,8 +318,22 @@
       "detail": "see https://github.com/microsoft/vscode-remote-release/issues/6997",
       "type": "shell",
       "command": "VSCODE_IPC_HOOK_CLI=$( lsof | grep $UID/vscode-ipc | awk '{print $(NF-1)}' | head -n 1 )",
-    "problemMatcher": []
-  },
+      "problemMatcher": []
+    },
+    {
+      "label": "make control.ros.org",
+      "detail": "",
+      "type": "shell",
+      "command": "cd src/control.ros.org && make html",
+      "problemMatcher": []
+    },
+    {
+      "label": "show control.ros.org",
+      "detail": "",
+      "type": "shell",
+      "command": "python3 -m http.server --directory src/control.ros.org/_build/html 8080",
+      "problemMatcher": []
+    },    
   ],
   "inputs": [
     {
