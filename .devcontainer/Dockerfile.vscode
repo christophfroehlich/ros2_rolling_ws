@@ -1,7 +1,7 @@
 # This is an auto generated Dockerfile for ros2:source
 # generated from docker_images_ros2/source/create_ros_image.Dockerfile.em
 
-ARG FROM_IMAGE=ros:rolling
+ARG FROM_IMAGE=ros:humble
 FROM $FROM_IMAGE
 
 RUN \
@@ -17,31 +17,26 @@ RUN \
   libelf-dev \ 
   python3-pip \
   npm \
-  ros-rolling-ackermann-msgs \
-  ros-rolling-ament-cmake-google-benchmark \
-  ros-rolling-angles \
-  ros-rolling-backward-ros\
-  ros-rolling-camera-info-manager \
-  ros-rolling-diagnostic-updater \
-  ros-rolling-filters \
-  ros-rolling-gazebo-ros \
-  ros-rolling-generate-parameter-library \
-  ros-rolling-generate-parameter-library-py \
-  ros-rolling-joint-state-publisher-gui \
-  ros-rolling-plotjuggler-msgs \
-  ros-rolling-plotjuggler-ros \
-  ros-rolling-python-qt-binding \
-  ros-rolling-realtime-tools \ 
-  ros-rolling-rqt-gui \
-  ros-rolling-rqt-gui-py \
-  ros-rolling-rviz2 \
-  ros-rolling-test-msgs \
-  ros-rolling-xacro \
-  # the following ones are held back by apt and have to be explicitly set, why?
-  ros-rolling-rcl ros-rolling-rclcpp ros-rolling-rmw \
-  ros-rolling-rmw-fastrtps-cpp ros-rolling-rmw-fastrtps-shared-cpp \
-  ros-rolling-rosidl-generator-c ros-rolling-rosidl-generator-cpp \
-  ros-rolling-rosidl-typesupport-cpp ros-rolling-tracetools \
+  ros-humble-ackermann-msgs \
+  ros-humble-ament-cmake-google-benchmark \
+  ros-humble-angles \
+  ros-humble-backward-ros\
+  ros-humble-camera-info-manager \
+  ros-humble-diagnostic-updater \
+  ros-humble-filters \
+  ros-humble-gazebo-ros \
+  ros-humble-generate-parameter-library \
+  ros-humble-generate-parameter-library-py \
+  ros-humble-joint-state-publisher-gui \
+  ros-humble-plotjuggler-msgs \
+  ros-humble-plotjuggler-ros \
+  ros-humble-python-qt-binding \
+  ros-humble-realtime-tools \ 
+  ros-humble-rqt-gui \
+  ros-humble-rqt-gui-py \
+  ros-humble-rviz2 \
+  ros-humble-test-msgs \
+  ros-humble-xacro \
   && \
   : "remove cache" && \
   apt-get autoremove -y -qq && \
@@ -57,11 +52,29 @@ RUN \
   : "install ROS dependencies" && \
   apt-get -y install --no-install-recommends \
   ignition-fortress \
-  # the old name
-  # ros-rolling-ros-ign \
-  # ros-rolling-ign-ros2-control \
-  # add once it is released
-  # ros-rolling-ros-gz \
+  ros-humble-ros-ign \
+  ros-humble-ign-ros2-control \
+  && \
+  : "remove cache" && \
+  apt-get autoremove -y -qq && \
+  apt-get clean -y && \
+  rm -rf /var/lib/apt/lists/*
+
+# ros-rolling-ros-gz  is not released yet -> compile it from src
+ARG ROS_GZ_PATH=/opt/ros/ws_ros_gz
+RUN \
+  : "install ros-rolling-ros-gz from src" && \
+  # set -x for debug output
+  set -x && \
+  apt-get update -y -qq && \
+  rosdep update --rosdistro $ROS_DISTRO &&\
+  mkdir -p ${ROS_GZ_PATH}/src && \
+  cd ${ROS_GZ_PATH}/src && \
+  git clone --depth 1 --branch humble https://github.com/gazebosim/ros_gz.git && \
+  cd ${ROS_GZ_PATH} && \
+  /bin/bash -c ". /opt/ros/rolling/setup.bash && export GZ_VERSION=fortress && rosdep install -r --from-paths src -i -y --rosdistro rolling" && \
+  apt-get update -y -qq && \
+  /bin/bash -c ". /opt/ros/rolling/setup.bash && export GZ_VERSION=fortress && colcon build" \
   && \
   : "remove cache" && \
   apt-get autoremove -y -qq && \
@@ -151,7 +164,7 @@ RUN npm install -g git-removed-branches
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
 
-RUN echo "source /opt/ros/rolling/setup.bash" >> "/home/${USERNAME}/.bashrc" \
+RUN echo "source /opt/ros/humble/setup.bash" >> "/home/${USERNAME}/.bashrc" \
   && echo "source /usr/share/gazebo/setup.sh" >> "/home/${USERNAME}/.bashrc"  \
   && echo "source ${ROS_GZ_PATH}/install/setup.bash" >> "/home/${USERNAME}/.bashrc"  \
   && echo "export GZ_VERSION=fortress" >> "/home/${USERNAME}/.bashrc"  \

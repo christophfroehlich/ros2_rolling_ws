@@ -1,5 +1,5 @@
 {
-  "name": "ROS2 Development WS",
+  "name": "ROS2 Development WS Humble",
   "dockerFile": "Dockerfile.vscode",
   "build": { //docker build arguments
     "args": {}
