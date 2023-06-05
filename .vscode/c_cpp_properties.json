@@ -3,7 +3,7 @@
     {
       "name": "Linux",
       "includePath": [
-        "/opt/ros/rolling/include/**",
+        "/opt/ros/humble/include/**",
         "${workspaceFolder}/**",
         "/usr/include/**"
       ],

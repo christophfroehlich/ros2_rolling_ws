@@ -89,14 +89,15 @@
     "semaphore": "cpp",
     "stop_token": "cpp",
     "coroutine": "cpp",
-    "source_location": "cpp"
+    "source_location": "cpp",
+    "charconv": "cpp"
   },
   "python.analysis.extraPaths": [
-    "/opt/ros/rolling/lib/python3.10/site-packages/"
+    "/opt/ros/humble/lib/python3.10/site-packages/"
   ],
   // Autocomplete from ros python packages
   "python.autoComplete.extraPaths": [
-    "/opt/ros/rolling/lib/python3.10/site-packages/"
+    "/opt/ros/humble/lib/python3.10/site-packages/"
   ],
   // Environment file lets vscode find python files within workspace
   "python.envFile": "${workspaceFolder}/.env",
@@ -105,8 +106,8 @@
   ],
   "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
   "C_Cpp.formatting": "default",
-  // if compiled from source, it isn't installed under /upt/ros/rolling
-  "uncrustify.configPath.linux": "/opt/ros/rolling/lib/python3.10/site-packages/ament_uncrustify/configuration/ament_code_style.cfg",
+  // if compiled from source, it isn't installed under /opt/ros/humble
+  "uncrustify.configPath.linux": "/opt/ros/humble/lib/python3.10/site-packages/ament_uncrustify/configuration/ament_code_style.cfg",
   "[cpp]": {
     "editor.defaultFormatter": "zachflower.uncrustify"
   },
@@ -162,8 +163,8 @@
   "xml.format.spaceBeforeEmptyCloseTag": false,
   "xml.format.splitAttributesIndentSize": 1,
   "cmake.configureOnOpen": false,
-  "ros.distro": "rolling",
-  "ros.rosSetupScript": "/opt/ros/rolling/install/setup.bash",
+  "ros.distro": "humble",
+  "ros.rosSetupScript": "/opt/ros/humble/install/setup.bash",
   "ros.isolateEnvironment": false,
   "git.useCommitInputAsStashMessage": true,
   "git.repositoryScanIgnoredFolders": [
