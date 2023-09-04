@@ -25,8 +25,6 @@ RUN \
   ros-rolling-diagnostic-updater \
   ros-rolling-filters \
   ros-rolling-gazebo-ros \
-  ros-rolling-generate-parameter-library \
-  ros-rolling-generate-parameter-library-py \
   ros-rolling-joint-state-publisher-gui \
   ros-rolling-plotjuggler-msgs \
   ros-rolling-plotjuggler-ros \
@@ -109,7 +107,9 @@ RUN \
   && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
   && sudo apt update \
-  && sudo apt install gh -y
+  && sudo apt install gh -y \ 
+  # install git extension 
+  && npm install -g git-removed-branches
 
 # This Dockerfile adds a non-root user with sudo access. Use the "remoteUser"
 # property in devcontainer.json to use it. On Linux, the container user's GID/UIDs
@@ -142,11 +142,26 @@ RUN apt-get update \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-# install esbonio for sphinx + pre-commit
-RUN pip install esbonio sphinx_rtd_theme sphinx_multiversion sphinx_copybutton && pip3 install pre-commit 
+# install sphinx + pre-commit + pytest (proper version, otherwise we get 6.2.5)
+RUN pip install sphinx_rtd_theme sphinx_multiversion sphinx_copybutton && \
+  pip3 uninstall pygls & \
+  pip3 install typeguard==4.0.0
+RUN pip3 install pre-commit 
+RUN pip install -U pytest
 
-# install git extension 
-RUN npm install -g git-removed-branches
+# install colcon mixins
+# https://github.com/colcon/colcon-mixin-repository/
+# https://askubuntu.com/a/470636
+RUN \
+  : "install colcon mixins" \
+  && apt-get update -y -qq \
+  && apt-get -y install --no-install-recommends ccache lld \ 
+  && /usr/sbin/update-ccache-symlinks \
+  && echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a "/home/${USERNAME}/.bashrc" \
+  # Clean ups
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
@@ -155,7 +170,7 @@ RUN echo "source /opt/ros/rolling/setup.bash" >> "/home/${USERNAME}/.bashrc" \
   && echo "source /usr/share/gazebo/setup.sh" >> "/home/${USERNAME}/.bashrc"  \
   && echo "source ${ROS_GZ_PATH}/install/setup.bash" >> "/home/${USERNAME}/.bashrc"  \
   && echo "export GZ_VERSION=fortress" >> "/home/${USERNAME}/.bashrc"  \
-  && echo "export AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=true" > "/home/${USERNAME}/.bashrc" \
+  && echo "export AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=true" >> "/home/${USERNAME}/.bashrc" \
   && usermod -aG 104 ${USERNAME} \
   && usermod -aG video ${USERNAME} \
   && usermod -aG dialout ${USERNAME} \

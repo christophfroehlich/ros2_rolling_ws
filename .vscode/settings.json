@@ -165,6 +165,12 @@
   "ros.distro": "rolling",
   "ros.rosSetupScript": "/opt/ros/rolling/install/setup.bash",
   "ros.isolateEnvironment": false,
+  "esbonio.sphinx.confDir": "",
+  "restructuredtext.pythonRecommendation.disabled": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "python.formatting.provider": "none",
   "git.useCommitInputAsStashMessage": true,
   "git.repositoryScanIgnoredFolders": [
     "node_modules",

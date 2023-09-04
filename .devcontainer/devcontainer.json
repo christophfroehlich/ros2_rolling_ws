@@ -21,6 +21,7 @@
     "dotjoshjohnson.xml",
     "zachflower.uncrustify",
     "ms-azuretools.vscode-docker",
+    "ms-python.python",
     "ms-iot.vscode-ros",
     "ms-vscode.cpptools",
     "ms-vscode.cmake-tools",
@@ -31,9 +32,12 @@
     "yzhang.markdown-all-in-one",
     "eamodio.gitlens",
     "mhutchie.git-graph",
-    "lextudio.restructuredtext",
+    //"lextudio.restructuredtext",
     "trond-snekvik.simple-rst",
-    "ms-python.python",
+    "github.vscode-github-actions",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.copilot-labs"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
