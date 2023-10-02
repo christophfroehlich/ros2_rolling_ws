@@ -40,6 +40,11 @@ RUN \
   ros-rolling-rmw-fastrtps-cpp ros-rolling-rmw-fastrtps-shared-cpp \
   ros-rolling-rosidl-generator-c ros-rolling-rosidl-generator-cpp \
   ros-rolling-rosidl-typesupport-cpp ros-rolling-tracetools \
+  # for generate_parameter_library
+  python3-jinja2 \
+  ros-rolling-tcb-span \
+  ros-rolling-tl-expected \
+  ros-rolling-rsl \
   && \
   : "remove cache" && \
   apt-get autoremove -y -qq && \
@@ -88,12 +93,17 @@ RUN apt-get update \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-# install sphinx + pre-commit + pytest (proper version, otherwise we get 6.2.5)
-RUN pip install sphinx_rtd_theme sphinx_multiversion sphinx_copybutton && \
-  pip3 uninstall pygls & \
-  pip3 install typeguard==4.0.0
-RUN pip3 install pre-commit 
-RUN pip install -U pytest
+# install stuff for control.ros.org and generate_parameter_library
+RUN \
+  apt-get update -y -qq \
+  && apt-get -y install --no-install-recommends doxygen graphviz python3-yaml python3-typeguard python3-jinja2 \
+  # Clean ups
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
+
+# pre-commit + pytest (proper version, otherwise we get 6.2.5)
+RUN pip3 install pre-commit && pip install -U pytest
 
 # install colcon mixins
 # https://github.com/colcon/colcon-mixin-repository/
