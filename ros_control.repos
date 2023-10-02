@@ -31,10 +31,6 @@ repositories:
     type: git
     url: https://github.com/ros-controls/realtime_tools.git
     version: master
-  gz_ros2_control:
-    type: git
-    url: https://github.com/ros-simulation/gz_ros2_control
-    version: master
   control.ros.org:
     type: git
     url: https://github.com/ros-controls/control.ros.org.git
