@@ -27,6 +27,12 @@ echo "*.pyc" > ~/.gitignore
 echo "*__pycache__*" >> ~/.gitignore
 git config --global core.excludesfile ~/.gitignore
 # defaults for colcon mixins
+colcon mixin add default \
+  https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml && \
+  colcon mixin update && \
+  colcon metadata add default \
+  https://raw.githubusercontent.com/colcon/colcon-metadata-repository/master/index.yaml && \
+  colcon metadata update
 mkdir ~/.colcon && cp .devcontainer/defaults.yaml ~/.colcon/defaults.yaml
 # alias to prune fork and origin
 echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r fork'" >> ~/.bashrc
