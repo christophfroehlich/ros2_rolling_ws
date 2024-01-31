@@ -20,7 +20,6 @@
   "extensions": [
     "dotjoshjohnson.xml",
     "zachflower.uncrustify",
-    "ms-azuretools.vscode-docker",
     "ms-python.python",
     "ms-iot.vscode-ros",
     "ms-vscode.cpptools",
@@ -36,8 +35,7 @@
     "trond-snekvik.simple-rst",
     "github.vscode-github-actions",
     "github.copilot",
-    "github.copilot-chat",
-    "github.copilot-labs"
+    "github.copilot-chat"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
@@ -63,8 +61,8 @@
     "DISPLAY=${env:DISPLAY}",
     "-e",
     "QT_X11_NO_MITSHM=1",
-    "-e",
-    "XDG_RUNTIME_DIR=${env:XDG_RUNTIME_DIR}",
+    // "-e",
+    // "XDG_RUNTIME_DIR=${env:XDG_RUNTIME_DIR}",
     "--net",
     "host",
     //"-v", ".:/workspace:cached",

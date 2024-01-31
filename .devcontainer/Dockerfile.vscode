@@ -32,6 +32,12 @@ RUN \
   ros-rolling-realtime-tools \ 
   ros-rolling-rqt-gui \
   ros-rolling-rqt-gui-py \
+  ros-rolling-rqt-common-plugins \
+  ros-rolling-rqt-publisher \
+  ros-rolling-rqt-reconfigure \
+  ros-rolling-rqt-service-caller \
+  ros-rolling-rqt-srv \
+  ros-rolling-rqt-action \
   ros-rolling-rviz2 \
   ros-rolling-test-msgs \
   ros-rolling-xacro \

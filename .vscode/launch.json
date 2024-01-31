@@ -8,47 +8,22 @@
       "name": "Debug Launch file",
       "type": "python",
       "request": "launch",
-      "program": "/opt/ros/humble/bin/ros2",
+      "program": "/opt/ros/rolling/bin/ros2",
       "console": "integratedTerminal",
       "justMyCode": false,
       "args": [
         "launch",
-        "epsilon_crane_bringup",
-        "gazebo_model.launch.py"
+        "${input:package}",
+        "${input:program}"
       ]
     },
     {
-      "name": "Start gazebo default model",
+      "name": "Debug python executable",
       "type": "python",
       "request": "launch",
-      "program": "/opt/ros/humble/bin/ros2",
+      "program": "install/rqt_joint_trajectory_controller/lib/rqt_joint_trajectory_controller/rqt_joint_trajectory_controller",
       "console": "integratedTerminal",
-      "justMyCode": true,
-      "args": [
-        "launch",
-        "epsilon_crane_bringup",
-        "gazebo_model.launch.py",
-        "plot:=${input:plot}",
-        "rviz:=${input:rviz}",
-        "use_perception_kit:=${input:perception}",
-        "initial_pose:=${input:initialPose}",
-        "cross_pile:=True"
-      ],
-      "preLaunchTask": "stop gzserver"
-    },
-    {
-      "name": "Bringup rviz model",
-      "type": "python",
-      "request": "launch",
-      "program": "/opt/ros/humble/bin/ros2",
-      "console": "integratedTerminal",
-      "justMyCode": true,
-      "args": [
-        "launch",
-        "epsilon_crane_description",
-        "view_crane.launch.py",
-        "gui:=True"
-      ]
+      "justMyCode": false,
     },
     // gdb launch of a ros executable
     {
