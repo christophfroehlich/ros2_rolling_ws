@@ -33,5 +33,4 @@ git clone https://github.com/PickNikRobotics/generate_parameter_library.git
 cd generate_parameter_library/generate_parameter_library_py/
 python3 -m pip install pyyaml
 python3 -m pip install .
-#
-echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r origin' >> ~/.bashrc
+
