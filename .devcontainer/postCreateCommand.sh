@@ -35,4 +35,4 @@ colcon mixin add default \
   colcon metadata update
 mkdir -p ~/.colcon && cp .devcontainer/defaults.yaml ~/.colcon/defaults.yaml
 # alias to prune fork and origin
-echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r fork'" >> ~/.bashrc
+echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r origin'" >> ~/.bashrc
