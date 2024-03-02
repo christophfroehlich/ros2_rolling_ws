@@ -18,3 +18,20 @@ rosdep install -riy --from-paths src
 touch src/control.ros.org/COLCON_IGNORE
 echo "*.pyc" > ~/.gitignore
 echo "*__pycache__*" >> ~/.gitignore
+git config --global core.excludesfile ~/.gitignore
+# defaults for colcon mixins
+mkdir ~/.colcon && cp .devcontainer/defaults.yaml ~/.colcon/
+colcon mixin add default \
+  https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml && \
+  colcon mixin update && \
+  colcon metadata add default \
+  https://raw.githubusercontent.com/colcon/colcon-metadata-repository/master/index.yaml && \
+  colcon metadata update
+# Install generate_parameter_library as python package
+cd
+git clone https://github.com/PickNikRobotics/generate_parameter_library.git
+cd generate_parameter_library/generate_parameter_library_py/
+python3 -m pip install pyyaml
+python3 -m pip install .
+#
+echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r origin' >> ~/.bashrc

@@ -54,7 +54,6 @@ RUN \
   ignition-fortress \
   ros-humble-ros-gz \
   ros-humble-ros-ign \
-  ros-humble-ign-ros2-control \
   && \
   : "remove cache" && \
   apt-get autoremove -y -qq && \
@@ -104,6 +103,24 @@ RUN apt-get update \
 # install esbonio for sphinx + pre-commit
 RUN pip install esbonio sphinx_rtd_theme sphinx_multiversion sphinx_copybutton && pip3 install pre-commit 
 
+# fix GPL https://github.com/PickNikRobotics/generate_parameter_library/issues/124
+RUN pip3 uninstall -y pygls && pip3 install typeguard==4.0.0
+
+# install colcon mixins
+# https://github.com/colcon/colcon-mixin-repository/
+# https://askubuntu.com/a/470636
+RUN \
+  : "install colcon mixins" \
+  && colcon mixin update \
+  && apt-get update -y -qq \
+  && apt-get -y install --no-install-recommends ccache lld \ 
+  && /usr/sbin/update-ccache-symlinks \
+  && echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a "/home/${USERNAME}/.bashrc" \
+  # Clean ups
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
+  
 # install git extension 
 RUN npm install -g git-removed-branches
 
@@ -114,6 +131,7 @@ RUN echo "source /opt/ros/humble/setup.bash" >> "/home/${USERNAME}/.bashrc" \
   && echo "source /usr/share/gazebo/setup.sh" >> "/home/${USERNAME}/.bashrc"  \
   && echo "export GZ_VERSION=fortress" >> "/home/${USERNAME}/.bashrc"  \
   && echo "export AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=true" >> "/home/${USERNAME}/.bashrc" \
+  && echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r origin'" >> "/home/${USERNAME}/.bashrc" \
   && usermod -aG 104 ${USERNAME} \
   && usermod -aG video ${USERNAME} \
   && usermod -aG dialout ${USERNAME} \

@@ -1,0 +1,6 @@
+{
+    "build": {
+        "symlink-install": true,
+        "mixin": ["ccache", "debug", "compile-commands", "lld"]
+    }
+}
