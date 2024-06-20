@@ -5,7 +5,9 @@
       "includePath": [
         "/opt/ros/rolling/include/**",
         "${workspaceFolder}/**",
-        "/usr/include/**"
+        "/usr/include/**",
+        "/usr/src/googletest/googlemock/include",
+        "${default}"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/gcc",

@@ -1,10 +1,18 @@
 #!/bin/bash
+echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a ~/.bashrc
+# user was not created in docker file yet
+sudo addgroup kvm \
+  && sudo usermod -aG video ${USERNAME} \
+  && sudo usermod -aG 1000 ${USERNAME} \
+  && sudo usermod -aG dialout ${USERNAME} \
+  && sudo usermod -aG kvm ${USERNAME} # joystick
 source /opt/ros/rolling/setup.bash
 sudo apt-get update
 rosdep update --rosdistro $ROS_DISTRO
-source /opt/ros/rolling/setup.bash
 set -xeu
 vcs import src < ros_control.repos
+# https://www.makeuseof.com/fix-pip-error-externally-managed-environment-linux/
+sudo rm /usr/lib/python3.12/EXTERNALLY-MANAGED || true
 # install stuff for control.ros.org
 (cd src/control.ros.org/ && python3 -m pip install -r requirements.txt)
 # Install generate_parameter_library as python package
@@ -19,6 +27,8 @@ rosdep install -riy --from-paths src
 (cd src/ros2_controllers && pre-commit install)
 (cd src/ros2_control && pre-commit install)
 (cd src/ros2_control_demos && pre-commit install)
+(cd src/realtime_tools && pre-commit install)
+(cd src/gz_ros2_control && pre-commit install)
 (cd src/control_toolbox && pre-commit install)
 (cd src/control_msgs && pre-commit install)
 (cd src/control.ros.org && pre-commit install)
@@ -36,3 +46,5 @@ colcon mixin add default \
 mkdir -p ~/.colcon && cp .devcontainer/defaults.yaml ~/.colcon/defaults.yaml
 # alias to prune fork and origin
 echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r origin'" >> ~/.bashrc
+echo "source /opt/ros/rolling/setup.bash" >> ~/.bashrc
+echo "export AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=true" >> ~/.bashrc

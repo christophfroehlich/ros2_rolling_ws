@@ -89,7 +89,13 @@
     "semaphore": "cpp",
     "stop_token": "cpp",
     "coroutine": "cpp",
-    "source_location": "cpp"
+    "source_location": "cpp",
+    "charconv": "cpp",
+    "valarray": "cpp",
+    "sample_trajectory": "cpp",
+    "core": "cpp",
+    "cassert": "cpp",
+    "slist": "cpp"
   },
   "python.analysis.extraPaths": [
     "/opt/ros/rolling/lib/python3.10/site-packages/"
@@ -178,5 +184,6 @@
     "build",
     "install"
   ],
-  "git.repositoryScanMaxDepth": 3
+  "git.repositoryScanMaxDepth": 3,
+  "cmake.sourceDirectory": "/workspaces/ros2_rolling_ws/build/controller_manager_msgs/controller_manager_msgs__py"
 }

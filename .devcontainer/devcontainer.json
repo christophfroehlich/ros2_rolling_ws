@@ -16,6 +16,15 @@
     "terminal.integrated.shell.linux": "/bin/bash",
     "workbench.colorTheme": "Solarized Dark"
   },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "false",
+      "username": "vscode",
+      "userUid": "1001",
+      "userGid": "1001",
+      "upgradePackages": "true"
+    },
+  },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "dotjoshjohnson.xml",
@@ -39,13 +48,9 @@
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
-  // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "uname -a",
   // Uncomment to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker.
   // "mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
   // https://docs.docker.com/engine/reference/commandline/run/
-  // Uncomment when using a ptrace-based debugger like C++, Go, and Rust
-  //"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--runtime", "nvidia", "--privileged", "--gpus", "all", "-e", "DISPLAY", "-e", "QT_X11_NO_MITSHM=1", "--net", "host", "-v", "/home/user/.Xauthority:/root/.Xauthority:rw", "-v", "/tmp/.X11-unix:/tmp/.X11-unix" ],
   "runArgs": [
     // nvidia begin
     // "--runtime",
@@ -57,21 +62,14 @@
     "--security-opt",
     "seccomp=unconfined",
     "--privileged",
-    "-e",
-    "DISPLAY=${env:DISPLAY}",
-    "-e",
-    "QT_X11_NO_MITSHM=1",
+    "-e", "DISPLAY=${env:DISPLAY}",
+    "-e", "QT_X11_NO_MITSHM=1",
     // "-e",
     // "XDG_RUNTIME_DIR=${env:XDG_RUNTIME_DIR}",
-    "--net",
-    "host",
-    //"-v", ".:/workspace:cached",
-    // "-v",
-    // "/home/user/.Xauthority:/root/.Xauthority:rw",
-    // "-v",
-    // "/home/murschitzm/test:/mnt/data",
-    "-v",
-    "/tmp/.X11-unix:/tmp/.X11-unix",
+    "--net", "host",
+    "-e", "XAUTHORITY=/tmp/.Xauthority",
+    "-v", "${localEnv:HOME}/.Xauthority:/tmp/.Xauthority",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
     "--device=/dev:/dev"
   ],
   // sets correct permission for shell scripts. may be run once only

@@ -11,12 +11,14 @@ RUN \
   : "install ROS dependencies" && \
   apt-get -y install --no-install-recommends \
   clang-format \
-  python3-pygraphviz \
-  python3-rospkg \
   libdw-dev \ 
   libelf-dev \ 
-  python3-pip \
+  liburdfdom-tools \
   npm \
+  python3-jinja2 \
+  python3-pip \
+  python3-pygraphviz \
+  python3-rospkg \
   ros-rolling-ackermann-msgs \
   ros-rolling-ament-cmake-google-benchmark \
   ros-rolling-angles \
@@ -24,33 +26,27 @@ RUN \
   ros-rolling-camera-info-manager \
   ros-rolling-diagnostic-updater \
   ros-rolling-filters \
-  ros-rolling-gazebo-ros \
   ros-rolling-joint-state-publisher-gui \
-  ros-rolling-plotjuggler-msgs \
-  ros-rolling-plotjuggler-ros \
+  # ros-rolling-plotjuggler-msgs \
+  # ros-rolling-plotjuggler-ros \
   ros-rolling-python-qt-binding \
   ros-rolling-realtime-tools \ 
+  ros-rolling-ros-gz-bridge \
+  ros-rolling-ros-gz-sim \
+  ros-rolling-rqt-action \
+  ros-rolling-rqt-common-plugins \
   ros-rolling-rqt-gui \
   ros-rolling-rqt-gui-py \
-  ros-rolling-rqt-common-plugins \
   ros-rolling-rqt-publisher \
   ros-rolling-rqt-reconfigure \
   ros-rolling-rqt-service-caller \
   ros-rolling-rqt-srv \
-  ros-rolling-rqt-action \
-  ros-rolling-rviz2 \
-  ros-rolling-test-msgs \
-  ros-rolling-xacro \
-  # the following ones are held back by apt and have to be explicitly set, why?
-  ros-rolling-rcl ros-rolling-rclcpp ros-rolling-rmw \
-  ros-rolling-rmw-fastrtps-cpp ros-rolling-rmw-fastrtps-shared-cpp \
-  ros-rolling-rosidl-generator-c ros-rolling-rosidl-generator-cpp \
-  ros-rolling-rosidl-typesupport-cpp ros-rolling-tracetools \
-  # for generate_parameter_library
-  python3-jinja2 \
-  ros-rolling-tcb-span \
-  ros-rolling-tl-expected \
   ros-rolling-rsl \
+  ros-rolling-rviz2 \
+  ros-rolling-tcb-span \
+  ros-rolling-test-msgs \
+  ros-rolling-tl-expected \
+  ros-rolling-xacro \
   && \
   : "remove cache" && \
   apt-get autoremove -y -qq && \
@@ -68,37 +64,6 @@ RUN \
   # install git extension 
   && npm install -g git-removed-branches
 
-# This Dockerfile adds a non-root user with sudo access. Use the "remoteUser"
-# property in devcontainer.json to use it. On Linux, the container user's GID/UIDs
-# will be updated to match your local UID/GID (when using the dockerFile property).
-# See https://aka.ms/vscode-remote/containers/non-root-user for details.
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-
-# Options for common package install script - SHA generated on release
-ARG INSTALL_ZSH="false"
-ARG UPGRADE_PACKAGES="true"
-ARG COMMON_SCRIPT_SOURCE="https://raw.githubusercontent.com/microsoft/vscode-dev-containers/v0.245.2/script-library/common-debian.sh"
-ARG COMMON_SCRIPT_SHA="d570f548f2f8df9563010492290ffda6105ed4026f452cdb506df8c0ce65acae"
-
-# Configure apt and install packages
-RUN apt-get update \
-  && export DEBIAN_FRONTEND=noninteractive \
-  #
-  # Verify git, common tools / libs installed, add/modify non-root user, optionally install zsh
-  && apt-get -y install --no-install-recommends curl ca-certificates 2>&1 \
-  && curl -sSL  ${COMMON_SCRIPT_SOURCE} -o /tmp/common-debian.sh \
-  && ([ "${COMMON_SCRIPT_SHA}" = "dev-mode" ] || (echo "${COMMON_SCRIPT_SHA} /tmp/common-debian.sh" | sha256sum -c -)) \
-  && /bin/bash /tmp/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
-  && rm /tmp/common-debian.sh \
-  && apt-get -y install --no-install-recommends build-essential gdb gdbserver cmake aptitude udev can-utils python3-pyqtgraph 2>&1 \
-  #
-  # Clean ups
-  && apt-get autoremove -y \
-  && apt-get clean -y \
-  && rm -rf /var/lib/apt/lists/*
-
 # install stuff for control.ros.org and generate_parameter_library
 RUN \
   apt-get update -y -qq \
@@ -108,8 +73,15 @@ RUN \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-# pre-commit + pytest (proper version, otherwise we get 6.2.5)
-RUN pip3 install pre-commit && pip install -U pytest
+# pre-commit + pytest 
+# RUN pip3 install pre-commit && pip install -U pytest
+RUN \
+  apt-get update -y -qq \
+  && apt-get -y install --no-install-recommends pre-commit python3-pytest \
+  # Clean ups
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
 
 # install colcon mixins
 # https://github.com/colcon/colcon-mixin-repository/
@@ -127,12 +99,4 @@ RUN \
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
-
-RUN echo "source /opt/ros/rolling/setup.bash" >> "/home/${USERNAME}/.bashrc" \
-  && echo "source /usr/share/gazebo/setup.sh" >> "/home/${USERNAME}/.bashrc"  \
-  && echo "export AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=true" >> "/home/${USERNAME}/.bashrc" \
-  && usermod -aG 104 ${USERNAME} \
-  && usermod -aG video ${USERNAME} \
-  && usermod -aG dialout ${USERNAME} \
-  && usermod -aG kvm ${USERNAME} # joystick
 
