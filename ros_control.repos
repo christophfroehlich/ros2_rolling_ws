@@ -10,7 +10,7 @@ repositories:
   gz_ros2_control:
     type: git
     url: https://github.com/ros-controls/gz_ros2_control.git
-    version: master
+    version: jazzy
   kinematics_interface:
     type: git
     url: https://github.com/ros-controls/kinematics_interface.git
@@ -34,7 +34,7 @@ repositories:
   control.ros.org:
     type: git
     url: https://github.com/ros-controls/control.ros.org.git
-    version: master
+    version: jazzy
   generate_parameter_library:
     type: git
     url: https://github.com/PickNikRobotics/generate_parameter_library.git

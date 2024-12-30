@@ -3,7 +3,8 @@
     {
       "name": "Linux",
       "includePath": [
-        "/opt/ros/rolling/include/**",
+        "/opt/ros/jazzy/include/**",
+        "/opt/ros/jazzy/opt/**",
         "${workspaceFolder}/**",
         "/usr/include/**",
         "/usr/src/googletest/googlemock/include",

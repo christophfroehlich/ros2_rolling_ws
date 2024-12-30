@@ -6,7 +6,7 @@ sudo addgroup kvm \
   && sudo usermod -aG 1000 ${USERNAME} \
   && sudo usermod -aG dialout ${USERNAME} \
   && sudo usermod -aG kvm ${USERNAME} # joystick
-source /opt/ros/rolling/setup.bash
+source /opt/ros/jazzy/setup.bash
 sudo apt-get update
 rosdep update --rosdistro $ROS_DISTRO
 set -xeu
@@ -22,7 +22,7 @@ sudo rm /usr/lib/python3.12/EXTERNALLY-MANAGED || true
 # install other dependencies
 rosdep install -riy --from-paths src
 # if the repo is cloned from windows
-# git config --global --add safe.directory /workspaces/ros2_rolling_ws
+# git config --global --add safe.directory /workspaces/ros2_jazzy_ws
 # install pre-commit hooks
 (cd src/ros2_controllers && pre-commit install)
 (cd src/ros2_control && pre-commit install)
@@ -46,5 +46,5 @@ colcon mixin add default \
 mkdir -p ~/.colcon && cp .devcontainer/defaults.yaml ~/.colcon/defaults.yaml
 # alias to prune fork and origin
 echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r origin'" >> ~/.bashrc
-echo "source /opt/ros/rolling/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 echo "export AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=true" >> ~/.bashrc

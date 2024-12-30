@@ -1,7 +1,7 @@
 # This is an auto generated Dockerfile for ros2:source
 # generated from docker_images_ros2/source/create_ros_image.Dockerfile.em
 
-ARG FROM_IMAGE=ros:rolling
+ARG FROM_IMAGE=ros:jazzy
 FROM $FROM_IMAGE
 
 RUN \
@@ -19,34 +19,34 @@ RUN \
   python3-pip \
   python3-pygraphviz \
   python3-rospkg \
-  ros-rolling-ackermann-msgs \
-  ros-rolling-ament-cmake-google-benchmark \
-  ros-rolling-angles \
-  ros-rolling-backward-ros\
-  ros-rolling-camera-info-manager \
-  ros-rolling-diagnostic-updater \
-  ros-rolling-filters \
-  ros-rolling-joint-state-publisher-gui \
-  # ros-rolling-plotjuggler-msgs \
-  # ros-rolling-plotjuggler-ros \
-  ros-rolling-python-qt-binding \
-  ros-rolling-realtime-tools \ 
-  ros-rolling-ros-gz-bridge \
-  ros-rolling-ros-gz-sim \
-  ros-rolling-rqt-action \
-  ros-rolling-rqt-common-plugins \
-  ros-rolling-rqt-gui \
-  ros-rolling-rqt-gui-py \
-  ros-rolling-rqt-publisher \
-  ros-rolling-rqt-reconfigure \
-  ros-rolling-rqt-service-caller \
-  ros-rolling-rqt-srv \
-  ros-rolling-rsl \
-  ros-rolling-rviz2 \
-  ros-rolling-tcb-span \
-  ros-rolling-test-msgs \
-  ros-rolling-tl-expected \
-  ros-rolling-xacro \
+  ros-jazzy-ackermann-msgs \
+  ros-jazzy-ament-cmake-google-benchmark \
+  ros-jazzy-angles \
+  ros-jazzy-backward-ros\
+  ros-jazzy-camera-info-manager \
+  ros-jazzy-diagnostic-updater \
+  ros-jazzy-filters \
+  ros-jazzy-joint-state-publisher-gui \
+  # ros-jazzy-plotjuggler-msgs \
+  # ros-jazzy-plotjuggler-ros \
+  ros-jazzy-python-qt-binding \
+  ros-jazzy-realtime-tools \ 
+  ros-jazzy-ros-gz-bridge \
+  ros-jazzy-ros-gz-sim \
+  ros-jazzy-rqt-action \
+  ros-jazzy-rqt-common-plugins \
+  ros-jazzy-rqt-gui \
+  ros-jazzy-rqt-gui-py \
+  ros-jazzy-rqt-publisher \
+  ros-jazzy-rqt-reconfigure \
+  ros-jazzy-rqt-service-caller \
+  ros-jazzy-rqt-srv \
+  ros-jazzy-rsl \
+  ros-jazzy-rviz2 \
+  ros-jazzy-tcb-span \
+  ros-jazzy-test-msgs \
+  ros-jazzy-tl-expected \
+  ros-jazzy-xacro \
   && \
   : "remove cache" && \
   apt-get autoremove -y -qq && \
