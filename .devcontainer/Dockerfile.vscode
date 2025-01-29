@@ -15,6 +15,8 @@ RUN \
   libelf-dev \ 
   liburdfdom-tools \
   npm \
+  python3-bloom \
+  python3-catkin-pkg \
   python3-jinja2 \
   python3-pip \
   python3-pygraphviz \
