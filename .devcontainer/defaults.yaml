@@ -1,6 +1,7 @@
 {
     "build": {
         "symlink-install": true,
-        "mixin": ["ccache", "debug", "compile-commands", "lld"]
+        "mixin": ["ccache", "debug", "compile-commands", "lld"],
+        "parallel-workers": 7
     }
 }
