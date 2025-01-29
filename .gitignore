@@ -5,6 +5,11 @@ log
 __pycache__
 temp
 
+#rosdoc2
+cross_reference
+docs_build
+docs_output
+
 # temporary stuff
 .pybuild
 *egg-info
@@ -18,3 +23,5 @@ export_parameters.m
 # files starting wtih underline in this dir
 /_*.sh
 /_*.py
+
+.venv

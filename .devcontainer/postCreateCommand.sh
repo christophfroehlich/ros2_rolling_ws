@@ -36,6 +36,8 @@ touch src/control.ros.org/COLCON_IGNORE
 echo "*.pyc" > ~/.gitignore
 echo "*__pycache__*" >> ~/.gitignore
 git config --global core.excludesfile ~/.gitignore
+echo ".ccache" > ~/.gitignore
+echo ".work" > ~/.gitignore
 # defaults for colcon mixins
 colcon mixin add default \
   https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml && \
