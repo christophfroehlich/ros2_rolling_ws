@@ -29,8 +29,8 @@ RUN \
   ros-rolling-diagnostic-updater \
   ros-rolling-filters \
   ros-rolling-joint-state-publisher-gui \
-  # ros-rolling-plotjuggler-msgs \
-  # ros-rolling-plotjuggler-ros \
+  ros-rolling-plotjuggler-msgs \
+  ros-rolling-plotjuggler-ros \
   ros-rolling-python-qt-binding \
   ros-rolling-realtime-tools \ 
   ros-rolling-ros-gz-bridge \
@@ -41,6 +41,8 @@ RUN \
   ros-rolling-rqt-gui-py \
   ros-rolling-rqt-publisher \
   ros-rolling-rqt-reconfigure \
+  ros-rolling-rqt-robot-monitor \
+  ros-rolling-rqt-runtime-monitor \
   ros-rolling-rqt-service-caller \
   ros-rolling-rqt-srv \
   ros-rolling-rsl \

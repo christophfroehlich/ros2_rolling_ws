@@ -14,6 +14,7 @@ vcs import src < ros_control.repos
 # https://www.makeuseof.com/fix-pip-error-externally-managed-environment-linux/
 sudo rm /usr/lib/python3.12/EXTERNALLY-MANAGED || true
 # install stuff for control.ros.org
+touch src/control.ros.org/COLCON_IGNORE 
 (cd src/control.ros.org/ && python3 -m pip install -r requirements.txt)
 # Install generate_parameter_library as python package
 # python3 -m pip install pyyaml
@@ -32,12 +33,11 @@ rosdep install -riy --from-paths src
 (cd src/control_toolbox && pre-commit install)
 (cd src/control_msgs && pre-commit install)
 (cd src/control.ros.org && pre-commit install)
-touch src/control.ros.org/COLCON_IGNORE
-echo "*.pyc" > ~/.gitignore
+echo "*.pyc" >> ~/.gitignore
 echo "*__pycache__*" >> ~/.gitignore
+echo ".ccache" >> ~/.gitignore
+echo ".work" >> ~/.gitignore
 git config --global core.excludesfile ~/.gitignore
-echo ".ccache" > ~/.gitignore
-echo ".work" > ~/.gitignore
 # defaults for colcon mixins
 colcon mixin add default \
   https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml && \
