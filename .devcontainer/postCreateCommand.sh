@@ -13,6 +13,8 @@ rosdep install -riy --from-paths src
 (cd src/ros2_control && pre-commit install)
 (cd src/ros2_control_demos && pre-commit install)
 (cd src/control_toolbox && pre-commit install)
+(cd src/kinematics_interface && pre-commit install)
+(cd src/realtime_tools && pre-commit install)
 (cd src/control_msgs && pre-commit install)
 (cd src/control.ros.org && pre-commit install)
 touch src/control.ros.org/COLCON_IGNORE
@@ -27,6 +29,8 @@ colcon mixin add default \
   colcon metadata add default \
   https://raw.githubusercontent.com/colcon/colcon-metadata-repository/master/index.yaml && \
   colcon metadata update
+# Install pytest for the user, different version than with apt, needed for ament_cmake_pytest
+pip install -U pytest
 # Install generate_parameter_library as python package
 cd
 git clone https://github.com/PickNikRobotics/generate_parameter_library.git

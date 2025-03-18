@@ -49,11 +49,32 @@ RUN \
   # set -x for debug output
   set -x && \
   apt-get update -y -qq && \
-  : "install ROS dependencies" && \
+  : "install gazebo fortress" && \
   apt-get -y install --no-install-recommends \
   ignition-fortress \
   ros-humble-ros-gz \
   ros-humble-ros-ign \
+  && \
+  : "remove cache" && \
+  apt-get autoremove -y -qq && \
+  apt-get clean -y && \
+  rm -rf /var/lib/apt/lists/*
+
+# install Gazebo harmonic
+# https://gazebosim.org/docs/harmonic/ros_installation/#gazebo-harmonic-with-ros-2-humble-or-rolling-use-with-caution
+# https://gazebosim.org/docs/harmonic/install_gz11_side_by_side/
+RUN \
+  # set -x for debug output
+  set -x && \
+  add-apt-repository ppa:openrobotics/gazebo11-gz-cli && \
+  curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg  && \
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null  && \
+  apt-get update -y -qq && \
+  apt-get -y install --no-install-recommends \
+  gazebo11 \
+  gz-harmonic \
+  && \
+  bash -c 'wget https://raw.githubusercontent.com/osrf/osrf-rosdep/master/gz/00-gazebo.list -O /etc/ros/rosdep/sources.list.d/00-gazebo.list' \
   && \
   : "remove cache" && \
   apt-get autoremove -y -qq && \
@@ -100,8 +121,24 @@ RUN apt-get update \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
-# install esbonio for sphinx + pre-commit
-RUN pip install esbonio sphinx_rtd_theme sphinx_multiversion sphinx_copybutton && pip3 install pre-commit 
+# install stuff for control.ros.org and generate_parameter_library
+RUN \
+  apt-get update -y -qq \
+  && apt-get -y install --no-install-recommends doxygen graphviz python3-yaml python3-typeguard python3-jinja2 \
+  # Clean ups
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
+
+# stuff for release, pre-commit
+RUN \
+  apt-get update -y -qq \
+  && apt-get -y install --no-install-recommends pre-commit \
+  && python3-bloom python3-catkin-pkg \
+  # Clean ups
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
 
 # fix GPL https://github.com/PickNikRobotics/generate_parameter_library/issues/124
 RUN pip3 uninstall -y pygls && pip3 install typeguard==4.0.0
@@ -129,7 +166,6 @@ ENV DEBIAN_FRONTEND=dialog
 
 RUN echo "source /opt/ros/humble/setup.bash" >> "/home/${USERNAME}/.bashrc" \
   && echo "source /usr/share/gazebo/setup.sh" >> "/home/${USERNAME}/.bashrc"  \
-  && echo "export GZ_VERSION=fortress" >> "/home/${USERNAME}/.bashrc"  \
   && echo "export AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=true" >> "/home/${USERNAME}/.bashrc" \
   && echo "alias gitprune='git fetch --prune fork && git fetch --prune origin && git removed-branches --prune --force -r fork && git removed-branches --prune --force -r origin'" >> "/home/${USERNAME}/.bashrc" \
   && usermod -aG 104 ${USERNAME} \
