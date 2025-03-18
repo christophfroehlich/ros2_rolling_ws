@@ -9,5 +9,6 @@ do
       git fetch --prune fork
       git removed-branches --prune --force -r fork
     fi
+    git gc
     cd "$START_PWD"
 done
