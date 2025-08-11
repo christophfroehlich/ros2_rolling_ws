@@ -27,14 +27,17 @@ RUN \
   ros-rolling-backward-ros\
   ros-rolling-camera-info-manager \
   ros-rolling-diagnostic-updater \
+  ros-rolling-example-interfaces \
   ros-rolling-filters \
   ros-rolling-joint-state-publisher-gui \
+  ros-rolling-pal-statistics \
   ros-rolling-plotjuggler-msgs \
   ros-rolling-plotjuggler-ros \
   ros-rolling-python-qt-binding \
   ros-rolling-realtime-tools \ 
   ros-rolling-ros-gz-bridge \
   ros-rolling-ros-gz-sim \
+  ros-rolling-ros-testing \
   ros-rolling-rqt-action \
   ros-rolling-rqt-common-plugins \
   ros-rolling-rqt-gui \
@@ -47,14 +50,13 @@ RUN \
   ros-rolling-rqt-srv \
   ros-rolling-rsl \
   ros-rolling-rviz2 \
+  ros-rolling-sdformat-urdf \
   ros-rolling-tcb-span \
   ros-rolling-test-msgs \
   ros-rolling-tl-expected \
   ros-rolling-xacro \
   && \
   : "remove cache" && \
-  apt-get autoremove -y -qq && \
-  apt-get clean -y && \
   rm -rf /var/lib/apt/lists/*
 
 # github CLI
@@ -73,18 +75,14 @@ RUN \
   apt-get update -y -qq \
   && apt-get -y install --no-install-recommends doxygen graphviz python3-yaml python3-typeguard python3-jinja2 \
   # Clean ups
-  && apt-get autoremove -y \
-  && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
 # pre-commit + pytest 
 # RUN pip3 install pre-commit && pip install -U pytest
 RUN \
   apt-get update -y -qq \
-  && apt-get -y install --no-install-recommends pre-commit python3-pytest \
+  && apt-get -y install --no-install-recommends pre-commit python3-pytest python3-coverage \
   # Clean ups
-  && apt-get autoremove -y \
-  && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
 # install colcon mixins
@@ -97,9 +95,14 @@ RUN \
   && /usr/sbin/update-ccache-symlinks \
   && echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a "/home/${USERNAME}/.bashrc" \
   # Clean ups
-  && apt-get autoremove -y \
-  && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
+
+# https://github.com/devcontainers/images/blob/main/src/base-ubuntu/.devcontainer/Dockerfile
+RUN if id "ubuntu" &>/dev/null; then \
+  echo "Deleting user 'ubuntu'" && userdel -f -r ubuntu || echo "Failed to delete 'ubuntu' user"; \  
+  else \
+  echo "User 'ubuntu' does not exist"; \ 
+  fi
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog

@@ -1,21 +1,25 @@
 #!/bin/bash
+set -xe
 echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a ~/.bashrc
 # user was not created in docker file yet
+USERNAME=${USERNAME:-"vscode"}
 sudo addgroup kvm \
   && sudo usermod -aG video ${USERNAME} \
   && sudo usermod -aG 1000 ${USERNAME} \
   && sudo usermod -aG dialout ${USERNAME} \
   && sudo usermod -aG kvm ${USERNAME} # joystick
+# import ROS stuff
 source /opt/ros/rolling/setup.bash
+set -xeu
 sudo apt-get update
 rosdep update --rosdistro $ROS_DISTRO
-set -xeu
 vcs import src < ros_control.repos
 # https://www.makeuseof.com/fix-pip-error-externally-managed-environment-linux/
 sudo rm /usr/lib/python3.12/EXTERNALLY-MANAGED || true
 # install stuff for control.ros.org
-touch src/control.ros.org/COLCON_IGNORE 
-(cd src/control.ros.org/ && python3 -m pip install -r requirements.txt)
+git clone https://github.com/ros-controls/control.ros.org.git || true
+touch control.ros.org/COLCON_IGNORE 
+(cd control.ros.org/ && python3 -m pip install -r requirements.txt)
 # Install generate_parameter_library as python package
 # python3 -m pip install pyyaml
 # pip3 install typeguard==4.0.0
@@ -32,7 +36,8 @@ rosdep install -riy --from-paths src
 (cd src/gz_ros2_control && pre-commit install)
 (cd src/control_toolbox && pre-commit install)
 (cd src/control_msgs && pre-commit install)
-(cd src/control.ros.org && pre-commit install)
+(cd control.ros.org && pre-commit install)
+# update global git settings
 echo "*.pyc" >> ~/.gitignore
 echo "*__pycache__*" >> ~/.gitignore
 echo ".ccache" >> ~/.gitignore

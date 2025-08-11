@@ -324,14 +324,14 @@
       "label": "make control.ros.org",
       "detail": "",
       "type": "shell",
-      "command": "cd src/control.ros.org && make html",
+      "command": "cd control.ros.org && rm -rf _build && make html",
       "problemMatcher": []
     },
     {
       "label": "show control.ros.org",
       "detail": "",
       "type": "shell",
-      "command": "python3 -m http.server --directory src/control.ros.org/_build/html 8080",
+      "command": "python3 -m http.server --directory control.ros.org/_build/html 8080",
       "problemMatcher": []
     }, 
   ],

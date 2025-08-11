@@ -11,6 +11,10 @@ repositories:
     type: git
     url: https://github.com/ros-controls/ros2_control_ci.git
     version: master
+  ros2_control_cmake:
+    type: git
+    url: https://github.com/ros-controls/ros2_control_cmake.git
+    version: master
   gz_ros2_control:
     type: git
     url: https://github.com/ros-controls/gz_ros2_control.git
@@ -35,11 +39,11 @@ repositories:
     type: git
     url: https://github.com/ros-controls/realtime_tools.git
     version: master
-  control.ros.org:
-    type: git
-    url: https://github.com/ros-controls/control.ros.org.git
-    version: rolling
   generate_parameter_library:
     type: git
     url: https://github.com/PickNikRobotics/generate_parameter_library.git
+    version: main
+  topic_based_hardware_interfaces:
+    type: git
+    url: https://github.com/ros-controls/topic_based_hardware_interfaces.git
     version: main
