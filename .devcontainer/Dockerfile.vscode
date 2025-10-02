@@ -10,7 +10,7 @@ RUN \
   apt-get update -y -qq && \
   : "install ROS dependencies" && \
   apt-get -y install --no-install-recommends \
-  clang-format \
+  clang clang-format \
   libdw-dev \ 
   libelf-dev \ 
   liburdfdom-tools \
@@ -21,40 +21,40 @@ RUN \
   python3-pip \
   python3-pygraphviz \
   python3-rospkg \
-  ros-rolling-ackermann-msgs \
-  ros-rolling-ament-cmake-google-benchmark \
-  ros-rolling-angles \
-  ros-rolling-backward-ros\
-  ros-rolling-camera-info-manager \
-  ros-rolling-diagnostic-updater \
-  ros-rolling-example-interfaces \
-  ros-rolling-filters \
-  ros-rolling-joint-state-publisher-gui \
-  ros-rolling-pal-statistics \
-  ros-rolling-plotjuggler-msgs \
-  ros-rolling-plotjuggler-ros \
-  ros-rolling-python-qt-binding \
-  ros-rolling-realtime-tools \ 
-  ros-rolling-ros-gz-bridge \
-  ros-rolling-ros-gz-sim \
-  ros-rolling-ros-testing \
-  ros-rolling-rqt-action \
-  ros-rolling-rqt-common-plugins \
-  ros-rolling-rqt-gui \
-  ros-rolling-rqt-gui-py \
-  ros-rolling-rqt-publisher \
-  ros-rolling-rqt-reconfigure \
-  ros-rolling-rqt-robot-monitor \
-  ros-rolling-rqt-runtime-monitor \
-  ros-rolling-rqt-service-caller \
-  ros-rolling-rqt-srv \
-  ros-rolling-rsl \
-  ros-rolling-rviz2 \
-  ros-rolling-sdformat-urdf \
-  ros-rolling-tcb-span \
-  ros-rolling-test-msgs \
-  ros-rolling-tl-expected \
-  ros-rolling-xacro \
+  ros-$ROS_DISTRO-ackermann-msgs \
+  ros-$ROS_DISTRO-ament-cmake-google-benchmark \
+  ros-$ROS_DISTRO-angles \
+  ros-$ROS_DISTRO-backward-ros\
+  ros-$ROS_DISTRO-camera-info-manager \
+  ros-$ROS_DISTRO-diagnostic-updater \
+  ros-$ROS_DISTRO-example-interfaces \
+  ros-$ROS_DISTRO-filters \
+  ros-$ROS_DISTRO-joint-state-publisher-gui \
+  ros-$ROS_DISTRO-pal-statistics \
+  ros-$ROS_DISTRO-plotjuggler-msgs \
+  ros-$ROS_DISTRO-plotjuggler-ros \
+  ros-$ROS_DISTRO-python-qt-binding \
+  ros-$ROS_DISTRO-realtime-tools \ 
+  ros-$ROS_DISTRO-ros-gz-bridge \
+  ros-$ROS_DISTRO-ros-gz-sim \
+  ros-$ROS_DISTRO-ros-testing \
+  ros-$ROS_DISTRO-rqt-action \
+  ros-$ROS_DISTRO-rqt-common-plugins \
+  ros-$ROS_DISTRO-rqt-gui \
+  ros-$ROS_DISTRO-rqt-gui-py \
+  ros-$ROS_DISTRO-rqt-publisher \
+  ros-$ROS_DISTRO-rqt-reconfigure \
+  ros-$ROS_DISTRO-rqt-robot-monitor \
+  ros-$ROS_DISTRO-rqt-runtime-monitor \
+  ros-$ROS_DISTRO-rqt-service-caller \
+  ros-$ROS_DISTRO-rqt-srv \
+  ros-$ROS_DISTRO-rsl \
+  ros-$ROS_DISTRO-rviz2 \
+  ros-$ROS_DISTRO-sdformat-urdf \
+  ros-$ROS_DISTRO-tcb-span \
+  ros-$ROS_DISTRO-test-msgs \
+  ros-$ROS_DISTRO-tl-expected \
+  ros-$ROS_DISTRO-xacro \
   && \
   : "remove cache" && \
   rm -rf /var/lib/apt/lists/*
