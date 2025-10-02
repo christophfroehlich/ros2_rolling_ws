@@ -8,7 +8,7 @@
       "name": "Debug Launch file",
       "type": "python",
       "request": "launch",
-      "program": "/opt/ros/rolling/bin/ros2",
+      "program": "/opt/ros/jazzy/bin/ros2",
       "console": "integratedTerminal",
       "justMyCode": false,
       "args": [

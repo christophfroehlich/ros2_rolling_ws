@@ -15,52 +15,58 @@ RUN \
   libelf-dev \ 
   liburdfdom-tools \
   npm \
+  python3-bloom \
+  python3-catkin-pkg \
   python3-jinja2 \
   python3-pip \
   python3-pygraphviz \
   python3-rospkg \
-  ros-jazzy-ackermann-msgs \
-  ros-jazzy-ament-cmake-google-benchmark \
-  ros-jazzy-angles \
-  ros-jazzy-backward-ros\
-  ros-jazzy-camera-info-manager \
-  ros-jazzy-diagnostic-updater \
-  ros-jazzy-filters \
-  ros-jazzy-joint-state-publisher-gui \
-  # ros-jazzy-plotjuggler-msgs \
-  # ros-jazzy-plotjuggler-ros \
-  ros-jazzy-python-qt-binding \
-  ros-jazzy-realtime-tools \ 
-  ros-jazzy-ros-gz-bridge \
-  ros-jazzy-ros-gz-sim \
-  ros-jazzy-rqt-action \
-  ros-jazzy-rqt-common-plugins \
-  ros-jazzy-rqt-gui \
-  ros-jazzy-rqt-gui-py \
-  ros-jazzy-rqt-publisher \
-  ros-jazzy-rqt-reconfigure \
-  ros-jazzy-rqt-service-caller \
-  ros-jazzy-rqt-srv \
-  ros-jazzy-rsl \
-  ros-jazzy-rviz2 \
-  ros-jazzy-tcb-span \
-  ros-jazzy-test-msgs \
-  ros-jazzy-tl-expected \
-  ros-jazzy-xacro \
+  ros-$ROS_DISTRO-ackermann-msgs \
+  ros-$ROS_DISTRO-ament-cmake-google-benchmark \
+  ros-$ROS_DISTRO-angles \
+  ros-$ROS_DISTRO-backward-ros\
+  ros-$ROS_DISTRO-camera-info-manager \
+  ros-$ROS_DISTRO-diagnostic-updater \
+  ros-$ROS_DISTRO-example-interfaces \
+  ros-$ROS_DISTRO-filters \
+  ros-$ROS_DISTRO-joint-state-publisher-gui \
+  ros-$ROS_DISTRO-pal-statistics \
+  ros-$ROS_DISTRO-plotjuggler-msgs \
+  ros-$ROS_DISTRO-plotjuggler-ros \
+  ros-$ROS_DISTRO-python-qt-binding \
+  ros-$ROS_DISTRO-realtime-tools \ 
+  ros-$ROS_DISTRO-ros-gz-bridge \
+  ros-$ROS_DISTRO-ros-gz-sim \
+  ros-$ROS_DISTRO-ros-testing \
+  ros-$ROS_DISTRO-rqt-action \
+  ros-$ROS_DISTRO-rqt-common-plugins \
+  ros-$ROS_DISTRO-rqt-gui \
+  ros-$ROS_DISTRO-rqt-gui-py \
+  ros-$ROS_DISTRO-rqt-publisher \
+  ros-$ROS_DISTRO-rqt-reconfigure \
+  ros-$ROS_DISTRO-rqt-robot-monitor \
+  ros-$ROS_DISTRO-rqt-runtime-monitor \
+  ros-$ROS_DISTRO-rqt-service-caller \
+  ros-$ROS_DISTRO-rqt-srv \
+  ros-$ROS_DISTRO-rsl \
+  ros-$ROS_DISTRO-rviz2 \
+  ros-$ROS_DISTRO-sdformat-urdf \
+  ros-$ROS_DISTRO-tcb-span \
+  ros-$ROS_DISTRO-test-msgs \
+  ros-$ROS_DISTRO-tl-expected \
+  ros-$ROS_DISTRO-xacro \
   && \
   : "remove cache" && \
-  apt-get autoremove -y -qq && \
-  apt-get clean -y && \
   rm -rf /var/lib/apt/lists/*
 
 # github CLI
 RUN \
-  type -p curl >/dev/null || sudo apt install curl -y && \
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-  && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-  && sudo apt update \
-  && sudo apt install gh -y \ 
+  (type -p curl >/dev/null || apt install curl -y) && \
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+  && apt update \
+  && apt install gh -y \ 
   # install git extension 
   && npm install -g git-removed-branches
 
@@ -69,18 +75,14 @@ RUN \
   apt-get update -y -qq \
   && apt-get -y install --no-install-recommends doxygen graphviz python3-yaml python3-typeguard python3-jinja2 \
   # Clean ups
-  && apt-get autoremove -y \
-  && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
 # pre-commit + pytest 
 # RUN pip3 install pre-commit && pip install -U pytest
 RUN \
   apt-get update -y -qq \
-  && apt-get -y install --no-install-recommends pre-commit python3-pytest \
+  && apt-get -y install --no-install-recommends pre-commit python3-pytest python3-coverage \
   # Clean ups
-  && apt-get autoremove -y \
-  && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
 # install colcon mixins
@@ -91,11 +93,15 @@ RUN \
   && apt-get update -y -qq \
   && apt-get -y install --no-install-recommends ccache lld \ 
   && /usr/sbin/update-ccache-symlinks \
-  && echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a "/home/${USERNAME}/.bashrc" \
   # Clean ups
-  && apt-get autoremove -y \
-  && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
+
+# https://github.com/devcontainers/images/blob/main/src/base-ubuntu/.devcontainer/Dockerfile
+RUN if id "ubuntu" &>/dev/null; then \
+  echo "Deleting user 'ubuntu'" && userdel -f -r ubuntu || echo "Failed to delete 'ubuntu' user"; \  
+  else \
+  echo "User 'ubuntu' does not exist"; \ 
+  fi
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
